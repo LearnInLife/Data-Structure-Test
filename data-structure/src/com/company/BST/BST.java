@@ -115,6 +115,45 @@ public class BST<E extends Comparable<E>> {
         preOrder(node.rightChild);
     }
 
+    //二分搜索的非递归前序遍历
+    public void preOderNR() {
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            Node cur = stack.pop();
+
+            System.out.print(cur.e + " ");
+            if (cur.rightChild != null)
+                stack.push(cur.rightChild);
+            if (cur.leftChild != null)
+                stack.push(cur.leftChild);
+        }
+    }
+
+    //二分搜索树的中序遍历
+    public void inOrder() {
+        inOrder(root);
+    }
+
+    private void inOrder(Node node) {
+        if (node == null)return;
+        inOrder(node.leftChild);
+        System.out.print(node.e + " ");
+        inOrder(node.rightChild);
+    }
+
+    //二分搜索树的后序遍历
+    public void postOrder(){
+        postOrder(root);
+    }
+
+    private void postOrder(Node node) {
+        if (node == null)return;
+        postOrder(node.leftChild);
+        postOrder(node.rightChild);
+        System.out.print(node.e + " ");
+    }
+
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
@@ -188,11 +227,14 @@ public class BST<E extends Comparable<E>> {
         //  / \    \   //
         // 2  4     8  //
         /////////////////
-        bst.preOrder();
+//        bst.preOrder();
+//        System.out.println();
+//        bst.inOrder();
+//        System.out.println();
+        bst.postOrder();
         System.out.println();
         bst.inOrderNR();
         System.out.println();
-
 //        System.out.println(bst);
     }
 }
