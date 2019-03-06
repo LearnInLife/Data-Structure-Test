@@ -1,5 +1,7 @@
 package com.company.BST;
 
+import java.util.Stack;
+
 public class BST<E extends Comparable<E>> {
 
     private class Node {
@@ -84,7 +86,7 @@ public class BST<E extends Comparable<E>> {
 
     // 看二分搜索树中是否包含元素e
     public boolean contains(E e) {
-        return contains(root,e);
+        return contains(root, e);
     }
 
     private boolean contains(Node node, E e) {
@@ -95,9 +97,9 @@ public class BST<E extends Comparable<E>> {
         if (e.compareTo(node.e) == 0)
             return true;
         else if (e.compareTo(node.e) > 0)
-            return contains(node.rightChild,e);
+            return contains(node.rightChild, e);
         else
-            return contains(node.leftChild,e);
+            return contains(node.leftChild, e);
     }
 
     // 二分搜索树的前序遍历
@@ -108,8 +110,8 @@ public class BST<E extends Comparable<E>> {
     private void preOrder(Node node) {
         if (node == null)
             return;
-        System.out.print(node.e + " ");
         preOrder(node.leftChild);
+        System.out.print(node.e + " ");
         preOrder(node.rightChild);
     }
 
@@ -121,9 +123,9 @@ public class BST<E extends Comparable<E>> {
     }
 
     // 生成以node为根节点，深度为depth的描述二叉树的字符串
-    private void generateBSTString(Node node, int depth, StringBuilder res){
+    private void generateBSTString(Node node, int depth, StringBuilder res) {
 
-        if(node == null){
+        if (node == null) {
             res.append(generateDepthString(depth) + "null\n");
             return;
         }
@@ -133,17 +135,50 @@ public class BST<E extends Comparable<E>> {
         generateBSTString(node.rightChild, depth + 1, res);
     }
 
-    private String generateDepthString(int depth){
+    private String generateDepthString(int depth) {
         StringBuilder res = new StringBuilder();
-        for(int i = 0 ; i < depth ; i ++)
+        for (int i = 0; i < depth; i++)
             res.append("--");
         return res.toString();
     }
 
+    //二分搜索树的中序遍历非递归
+    public void inOrderNR() {
+        Node cur = root;
+        Stack<Node> stack = new Stack<>();
+//        stack.push(root);
+        while (cur != null || !stack.isEmpty()) {
+
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.leftChild;
+            }
+
+            Node node = stack.pop();
+            System.out.print(node.e + " ");
+            cur = node.rightChild;
+//            if (node.rightChild != null) {
+//                cur = node.rightChild;
+//                stack.push(cur);
+//            }
+
+        }
+    }
+
+    //二分搜索树的后序遍历非递归
+    public void postOrderNR() {
+        Node cur = root;
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+
+        }
+    }
+
     public static void main(String[] args) {
         BST<Integer> bst = new BST<>();
-        int[] nums = {5, 3, 6, 8, 4, 2};
-        for(int num: nums)
+        int[] nums = {5, 3, 6, 8, 4, 2, 7, 12};
+        for (int num : nums)
             bst.add(num);
 
         /////////////////
@@ -155,8 +190,10 @@ public class BST<E extends Comparable<E>> {
         /////////////////
         bst.preOrder();
         System.out.println();
+        bst.inOrderNR();
+        System.out.println();
 
-        System.out.println(bst);
+//        System.out.println(bst);
     }
 }
 
